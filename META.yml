@@ -1,0 +1,12 @@
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         POE-Loop-Glib
+version:      0.0012
+version_from: lib/POE/Loop/Glib.pm
+installdirs:  site
+requires:
+    Glib:                          0
+    POE:                           0.23
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.17
