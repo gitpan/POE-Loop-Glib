@@ -15,7 +15,7 @@ WriteMakefile(
    VERSION_FROM => 'lib/POE/Loop/Glib.pm',
    NAME => 'POE::Loop::Glib',
    PREREQ_PM => {
-      'POE' => '0.23',
+      'POE' => '0.30',
       'Glib' => '0',
    },
    dist => {

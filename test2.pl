@@ -1,5 +1,5 @@
 use Glib;
-use POE;
+use POE qw(Loop::Glib);
 
 
 use Data::Dumper;
@@ -17,7 +17,7 @@ my $session = POE::Session->create (
 			my ($kernel) = $_[KERNEL];
 
 			print "POE FOO $count\n";
-			warn "depth is " . Glib::main_depth;
+			print "depth is " . Glib::main_depth;
 			$count++;
 			$kernel->delay_add ('foo', 2) unless ($count > 5);
 		},

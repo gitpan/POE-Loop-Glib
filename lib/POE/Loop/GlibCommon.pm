@@ -1,4 +1,4 @@
-# $Id: GlibCommon.pm 12 2004-10-05 13:09:20Z martijn $
+# $Id: GlibCommon.pm 24 2004-12-10 11:35:44Z martijn $
 
 # Glib event loop bridge for POE::Kernel.
 
@@ -6,18 +6,18 @@
 package POE::Loop::GlibCommon;
 use strict;
 
-use Glib;
-use POE::Loop::PerlSignals;
 
 # Include common signal handling.
+use POE::Loop::PerlSignals;
 
 use vars qw($VERSION);
-$VERSION = do {my@r=(0,q$Rev: 12 $=~/\d+/g);sprintf"%d."."%04d"x$#r,@r};
+$VERSION = do {my@r=(0,q$Rev: 24 $=~/\d+/g);sprintf"%d."."%04d"x$#r,@r};
 
 # Everything plugs into POE::Kernel.
 package POE::Kernel;
 
 use strict;
+use POE::Kernel;
 
 my $_watcher_timer;
 my @fileno_watcher;
@@ -249,5 +249,6 @@ sub _loop_select_expedite_callback {
 sub loop_do_timeslice {
   die "doing timeslices currently not supported in the Glib based loops";
 }
+
 
 1;

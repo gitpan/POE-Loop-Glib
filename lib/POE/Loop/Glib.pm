@@ -1,4 +1,4 @@
-# $Id: Glib.pm 12 2004-10-05 13:09:20Z martijn $
+# $Id: Glib.pm 22 2004-12-10 11:34:44Z martijn $
 
 # Glib event loop bridge for POE::Kernel.
 
@@ -6,14 +6,11 @@
 package POE::Loop::Glib;
 use strict;
 
-#use Glib;
+use vars qw($VERSION);
+$VERSION = do {my@r=(0,q$Rev: 22 $=~/\d+/g);sprintf"%d."."%04d"x$#r,@r};
 
 # Include common signal handling.
-use POE::Loop::PerlSignals;
 use POE::Loop::GlibCommon;
-
-use vars qw($VERSION);
-$VERSION = do {my@r=(0,q$Rev: 12 $=~/\d+/g);sprintf"%d."."%04d"x$#r,@r};
 
 # Everything plugs into POE::Kernel.
 package POE::Kernel;
@@ -25,10 +22,30 @@ my $glib_mainloop;
 #------------------------------------------------------------------------------
 # Loop construction and destruction.
 
+sub loop_attach_uidestroy {
+  my ($self, $window) = @_;
+
+  # Don't bother posting the signal if there are no sessions left.  I
+  # think this is a bit of a kludge: the situation where a window
+  # lasts longer than POE::Kernel should never occur.
+  $window->signal_connect
+    ( delete_event =>
+      sub {
+        if ($self->_data_ses_count()) {
+          $self->_dispatch_event(
+            $self, $self,
+            EN_SIGNAL, ET_SIGNAL, [ 'UIDESTROY' ],
+            __FILE__, __LINE__, time(), -__LINE__
+          );
+        }
+        return 0;
+      }
+    );
+}
 sub loop_initialize {
   my $self = shift;
 
-  $glib_mainloop = Glib::MainLoop->new unless (Glib::main_depth > 0);
+  $glib_mainloop = Glib::MainLoop->new unless ($Glib::main_depth > 0);
 
 }
 
