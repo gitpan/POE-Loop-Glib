@@ -1,6 +1,7 @@
 AUTHORS
+Changes
 lib/POE/Loop/Glib.pm
-lib/POE/Loop/GlibCommon.pm
+LICENCE
 Makefile.PL
 MANIFEST			This list of files
 mylib/wheel_run.pm
