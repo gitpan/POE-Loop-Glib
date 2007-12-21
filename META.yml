@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                POE-Loop-Glib
-version:             0.0032
+version:             0.0033
 abstract:            a bridge that supports Glib's event loop from POE
 license:             GPL
 author:              

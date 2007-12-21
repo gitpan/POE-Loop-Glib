@@ -28,6 +28,7 @@ mylib/wheel_sf_tcp.pm
 mylib/wheel_sf_udp.pm
 mylib/wheel_sf_unix.pm
 mylib/wheel_tail.pm
+POE-Loop-Glib-0.0032.tar
 README
 t/Glib/all_errors.t
 t/Glib/comp_tcp.t
