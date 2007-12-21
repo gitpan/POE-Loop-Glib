@@ -2,7 +2,7 @@
 # $Id$
 
 use strict;
-use lib qw(/usr/share/perl5/POE/Test/Loops);
+use lib qw(./mylib);
 use Test::More;
 use POSIX qw(_exit);
 

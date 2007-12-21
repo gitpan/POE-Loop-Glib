@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                POE-Loop-Glib
-version:             0.0031
+version:             0.0032
 abstract:            a bridge that supports Glib's event loop from POE
 license:             GPL
 author:              
@@ -10,7 +10,6 @@ distribution_type:   module
 requires:     
     Glib:                          0
     POE:                           0.30
-    POE::Test::DondeEstan:         0
 meta-spec:
     url:     http://module-build.sourceforge.net/META-spec-v1.3.html
     version: 1.3

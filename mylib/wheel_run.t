@@ -15,7 +15,7 @@ BEGIN {
   }
 }
 
-require 'k_selects.pm';
+require 'wheel_run.pm';
 
 _exit 0 if $^O eq 'MSWin32';
 CORE::exit 0;
