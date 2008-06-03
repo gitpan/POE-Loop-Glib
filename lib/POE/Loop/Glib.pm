@@ -7,7 +7,7 @@ use warnings;
 
 use POE::Kernel; # for MakeMaker
 use vars qw($VERSION);
-$VERSION = '0.0033';
+$VERSION = '0.0034';
 
 # Include common signal handling.
 use POE::Loop::PerlSignals;
@@ -15,8 +15,10 @@ use POE::Loop::PerlSignals;
 # Everything plugs into POE::Kernel.
 package POE::Kernel;
 use strict;
+use warnings;
 
 my $_watcher_timer;
+my $_idle_timer;
 my @fileno_watcher;
 
 # Loop construction and destruction.
@@ -36,24 +38,25 @@ sub loop_finalize {
 # Maintain time watchers.
 sub loop_resume_time_watcher {
   my ($self, $next_time) = @_;
-  $next_time -= time();
-  $next_time *= 1000;
-  $next_time = 0 if $next_time < 0;
-  $_watcher_timer = Glib::Timeout->add($next_time, \&_loop_event_callback);
-}
+  my $now = time;
 
-sub loop_reset_time_watcher {
-  my ($self, $next_time) = @_;
-  # Should always be defined, right?
+  my $next = $next_time - $now;
+  $next *= 1000;
+  $next = 0 if $next < 0;
+
   if (defined $_watcher_timer) {
         Glib::Source->remove($_watcher_timer);
-        undef $_watcher_timer;
   }
-  $self->loop_resume_time_watcher($next_time);
+  $_watcher_timer = Glib::Timeout->add($next, \&_loop_event_callback);
 }
 
+# we remove the old Glib::Timeout anyway, so resume amounts to
+# the same thing as reset.
+*loop_reset_time_watcher = \*loop_resume_time_watcher;
+
 sub _loop_resume_timer {
-  Glib::Source->remove($_watcher_timer);
+  Glib::Source->remove($_idle_timer);
+  $_idle_timer = undef;
   $poe_kernel->loop_resume_time_watcher($poe_kernel->get_next_event_time());
 }
 
@@ -173,15 +176,14 @@ sub _loop_event_callback {
   $self->_data_ev_dispatch_due();
   $self->_test_if_kernel_is_idle();
 
-  Glib::Source->remove($_watcher_timer);
-  undef $_watcher_timer;
-
-  # Register the next timeout if there are events left.
+  if (defined $_idle_timer) {
+    Glib::Source->remove ($_idle_timer);
+    $_idle_timer = undef;
+  }
   if ($self->get_event_count()) {
-    $_watcher_timer = Glib::Idle->add(\&_loop_resume_timer);
+    $_idle_timer = Glib::Idle->add(\&_loop_resume_timer);
   }
 
-  # And back to Gtk, so we're in idle mode.
   $last_time = time() if TRACE_STATISTICS;
 
   # Return false to stop.
@@ -308,9 +310,10 @@ L<POE>, L<POE::Loop>, L<Glib>, L<Glib::MainLoop>
 
 Martijn van Beers  <martijn@cpan.org>
 
-and POE's licensing.
+=head1 LICENCE
 
-=head1 LICENCE GPL
+POE::Loop::Glib is released under the GPL version 2.0 or higher.
+See the file LICENCE for details. 
 
 =for poe_tests
 

@@ -1,9 +1,18 @@
 AUTHORS
 Changes
+inc/Module/Install.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Can.pm
+inc/Module/Install/Fetch.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/Metadata.pm
+inc/Module/Install/Win32.pm
+inc/Module/Install/WriteAll.pm
 lib/POE/Loop/Glib.pm
 LICENCE
 Makefile.PL
 MANIFEST			This list of files
+META.yml
 mylib/all_errors.pm
 mylib/comp_tcp.pm
 mylib/comp_tcp_concurrent.pm
@@ -28,8 +37,8 @@ mylib/wheel_sf_tcp.pm
 mylib/wheel_sf_udp.pm
 mylib/wheel_sf_unix.pm
 mylib/wheel_tail.pm
-POE-Loop-Glib-0.0032.tar
 README
+t/99-pod.t
 t/Glib/all_errors.t
 t/Glib/comp_tcp.t
 t/Glib/comp_tcp_concurrent.t
@@ -53,4 +62,3 @@ t/Glib/wheel_sf_tcp.t
 t/Glib/wheel_sf_udp.t
 t/Glib/wheel_sf_unix.t
 t/Glib/wheel_tail.t
-META.yml                                 Module meta-data (added by MakeMaker)
