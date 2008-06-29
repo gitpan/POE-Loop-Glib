@@ -4,9 +4,10 @@ author:
   - 'Martijn van Beers  <martijn@cpan.org>'
 build_requires:
   Test::More: 0
-  Test::Pod: 1.00
+configure_requires:
+  POE::Test::Loops: 1.001
 distribution_type: module
-generated_by: 'Module::Install version 0.72'
+generated_by: 'Module::Install version 0.75'
 license: gpl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.3.html
@@ -16,8 +17,16 @@ no_index:
   directory:
     - inc
     - t
+provides:
+  POE::Loop::Glib:
+    file: lib/POE/Loop/Glib.pm
+recommends:
+  IO::Pty: 0
+  Socket6: 0
+  Term::Readkey: 0
+  Win32::Console: 0
 requires:
   Glib: 1.181
   POE: 1.0
-tests: 't/*.t t/Glib/*.t'
-version: 0.0034
+  perl: 5.6.0
+version: 0.0035
