@@ -20,6 +20,7 @@ no_index:
 provides:
   POE::Loop::Glib:
     file: lib/POE/Loop/Glib.pm
+    version: 0.037
 recommends:
   IO::Pty: 0
   Socket6: 0
@@ -29,4 +30,4 @@ requires:
   Glib: 1.181
   POE: 1.003
   perl: 5.6.0
-version: 0.0036
+version: 0.037
